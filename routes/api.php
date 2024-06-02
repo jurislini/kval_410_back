@@ -24,10 +24,11 @@ Route::post('/login', [AuthController::class, 'login']);
 // });
 Route::middleware('auth:sanctum')->post('/reminders', [ReminderController::class, 'store']);
 Route::middleware('auth:sanctum')->group(function() {
-    Route::get('/test', function(){
-        return ['test'=> 'Success'];
-    });
+  
     Route::get('/test2', function(){
         return ['test'=> 'Success'];
     });
+});
+Route::get('/test', function(){
+    return ['test'=> 'Success'];
 });
