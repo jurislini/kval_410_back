@@ -20,3 +20,18 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+// use Illuminate\Support\Facades\DB;
+
+// Route::get('/list-tables', function () {
+//     $tables = DB::select('SHOW TABLES');
+//     $dbName = env('DB_DATABASE');
+//     $tableList = [];
+
+//     foreach ($tables as $table) {
+//         $tableList[] = $table->{"Tables_in_{$dbName}"};
+//     }
+
+//     return response()->json($tableList);
+// });
+
+

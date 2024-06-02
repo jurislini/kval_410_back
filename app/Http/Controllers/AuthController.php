@@ -41,18 +41,29 @@ public function login(Request $request)
         'password' => 'required',
     ]);
 
-    // Attempt to authenticate user
-    $user = User::where('email', $credentials['email'])->first();
-
-    if ($user && $user->password === $credentials['password']) {
-        $token = $user->createToken('authToken')->plainTextToken;
-        return response()->json(['token' => $token, 'user' => $user]);
-    } else {
-        // Authentication failed
-        throw ValidationException::withMessages([
-            'email' => ['The provided credentials are incorrect.'],
-        ]);
+    if (!Auth::attempt($credentials)) {
+        return response()->json([
+            'success' => false,
+            'message' => 'Email or password is incorrect'
+        ], 401);
     }
+
+    $user = Auth::user();
+    $token = $user->createToken($user->email)->plainTextToken;
+    return response()->json(['token' => $token, 'user' => $user]);
+
+    // Attempt to authenticate user
+    // $user = User::where('email', $credentials['email'])->first();
+
+    // if ($user && $user->password === $credentials['password']) {
+    //     $token = $user->createToken('authToken')->plainTextToken;
+    //     return response()->json(['token' => $token, 'user' => $user]);
+    // } else {
+    //     // Authentication failed
+    //     throw ValidationException::withMessages([
+    //         'email' => ['The provided credentials are incorrect.'],
+    //     ]);
+    // }
 }}
 
 // public function login(Request $request)
